@@ -46,7 +46,7 @@ from tensorflow.keras.callbacks import EarlyStopping
 
 from hyperopt import hp, fmin, tpe, Trials, STATUS_OK, space_eval
 
-# ── Configuracao ───────────────────────────────────────────────
+# Configuracao
 # Dataset multi-hot para os classificadores
 CLF_DATA_XLSX  = "dataset_multihot.xlsx"
 
@@ -100,7 +100,7 @@ METADATA_JSON   = os.path.join(OUT_DIR, "model_metadata.json")
 REPORT_XLSX     = os.path.join(OUT_DIR, "training_report.xlsx")
 
 
-# ── Seeds ─────────────────────────────────────────────────────
+# Seeds
 def set_seeds(seed: int = 24) -> None:
     os.environ["PYTHONHASHSEED"] = str(seed)
     random.seed(seed)
@@ -112,7 +112,7 @@ set_seeds(RANDOM_STATE)
 tf.config.run_functions_eagerly(False)
 
 
-# ── Carregamento dataset multi-hot (classificadores) ───────────
+# Carregamento dataset multi-hot (classificadores)
 def load_multihot(excel_path: str, sheet) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray, List[str]]:
     """
     Carrega o dataset multi-hot para os classificadores SVM.
@@ -152,7 +152,7 @@ def load_multihot(excel_path: str, sheet) -> Tuple[np.ndarray, np.ndarray, np.nd
     return X, biomass_label, product_label, strata, df, gene_cols
 
 
-# ── Carregamento dataset ANN (integer encoding) ────────────────
+# Carregamento dataset ANN (integer encoding)
 def load_ann_dataset(excel_path: str, sheet) -> pd.DataFrame:
     """
     Carrega o dataset integer encoding para a ANN regressora.
@@ -207,7 +207,7 @@ def make_model_inputs(X_num_s: np.ndarray, X_genes: np.ndarray) -> Dict:
     return inputs
 
 
-# ── Classificadores SVM (multi-hot) ───────────────────────────
+# Classificadores SVM (multi-hot)
 def train_svm_classifiers_multihot(
     X_train, biomass_label_train, product_label_train
 ):
@@ -233,7 +233,7 @@ def train_svm_classifiers_multihot(
     print(f"  CV Accuracy clf1: {cv_scores_clf1.mean():.4f} +/- {cv_scores_clf1.std():.4f}")
     clf1.fit(X_train_s, biomass_label_train)
 
-    # -- Classificador 2: product_positive (apenas viaveis) --
+    # Classificador 2: product_positive (apenas viaveis) 
     viable_mask          = biomass_label_train == 1
     X_train_s_viable     = X_train_s[viable_mask]
     product_label_viable = product_label_train[viable_mask]
@@ -252,7 +252,7 @@ def train_svm_classifiers_multihot(
     return clf1, clf2, clf_scaler, cv_scores_clf1, cv_scores_clf2
 
 
-# ── ANN Regressora (embeddings) ────────────────────────────────
+#  ANN Regressora (embeddings) 
 def build_ann_model(output_dim: int, params: Dict) -> keras.Model:
     reg = regularizers.l2(params["l2"]) if params["l2"] > 0 else None
 
@@ -425,7 +425,7 @@ def train_final_ann(X_num_train, X_genes_train, y_train,
     return model, x_scaler, y_scaler, report
 
 
-# ── Predicao final com pipeline completo ──────────────────────
+# Predicao final com pipeline completo 
 def predict_pipeline(
     X_clf,          # input multi-hot para os classificadores
     X_num, X_genes, # inputs para a ANN
@@ -479,7 +479,7 @@ def predict_pipeline(
     return predictions, biomass_pos, product_pos
 
 
-# ── Guardar relatorio ──────────────────────────────────────────
+# Guardar relatorio 
 def save_report(
     best_params, trials, ann_report,
     clf1_cv, clf2_cv,
@@ -531,7 +531,7 @@ def save_report(
     print(f"Relatorio guardado: {REPORT_XLSX}")
 
 
-# ── Main ───────────────────────────────────────────────────────
+# Main 
 def main() -> None:
     # 1. Carregar dataset multi-hot para classificadores
     print("A carregar dataset multi-hot (classificadores)...")
