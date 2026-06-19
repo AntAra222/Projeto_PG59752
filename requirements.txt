@@ -1,0 +1,9 @@
+cobra
+hyperopt
+joblib
+matplotlib
+numpy
+pandas
+scikit-learn
+tensorflow
+setuptools==75.1.0
