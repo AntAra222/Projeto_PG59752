@@ -1,9 +1,14 @@
-cobra
-hyperopt
-joblib
-matplotlib
-numpy
-pandas
-scikit-learn
-tensorflow
+# Core Libraries
+cobra==0.30.0
+matplotlib==3.10.8
+numpy==2.4.0
+pandas==2.3.3
+
+# Machine Learning & AI
+tensorflow==2.18.0
+scikit-learn==1.6.1
+joblib==1.4.2
+hyperopt==0.2.7
+
+
 setuptools==75.1.0
