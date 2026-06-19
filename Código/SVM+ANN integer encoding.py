@@ -39,7 +39,7 @@ from tensorflow.keras.callbacks import EarlyStopping
 
 from hyperopt import hp, fmin, tpe, Trials, STATUS_OK, space_eval
 
-# ── Configuração ───────────────────────────────────────────────
+# Configuração 
 DATA_XLSX  = "dataset_final_ann.xlsx"
 DATA_SHEET = 0
 
@@ -99,7 +99,7 @@ METADATA_JSON    = os.path.join(OUT_DIR, "model_metadata.json")
 REPORT_XLSX      = os.path.join(OUT_DIR, "training_report.xlsx")
 
 
-# ── Seeds ─────────────────────────────────────────────────────
+# Seeds 
 def set_seeds(seed: int = 24) -> None:
     os.environ["PYTHONHASHSEED"] = str(seed)
     random.seed(seed)
@@ -111,7 +111,7 @@ set_seeds(RANDOM_STATE)
 tf.config.run_functions_eagerly(False)
 
 
-# ── Carregamento e validação ───────────────────────────────────
+# Carregamento e validação 
 def validate_gene_structure(df: pd.DataFrame) -> None:
     bad_rows = []
     for idx, row in df.iterrows():
@@ -147,7 +147,7 @@ def load_and_preprocess(excel_path: str, sheet) -> pd.DataFrame:
     return df
 
 
-# ── Preparação dos dados ───────────────────────────────────────
+# Preparação dos dados
 def prepare_data(df: pd.DataFrame):
     """
     Prepara os dados e cria os labels para os dois classificadores.
@@ -175,7 +175,7 @@ def make_model_inputs(X_num_s: np.ndarray, X_genes: np.ndarray) -> Dict[str, np.
     return inputs
 
 
-# ── Classificadores SVM ────────────────────────────────────────
+# Classificadores SVM 
 def train_svm_classifiers(
     X_num_train, X_genes_train, biomass_label_train, product_label_train
 ):
@@ -194,8 +194,8 @@ def train_svm_classifiers(
     clf_scaler = StandardScaler().fit(X_flat_train)
     X_flat_s   = clf_scaler.transform(X_flat_train)
 
-    # ── Classificador 1: biomass_positive ──
-    print("A treinar Classificador 1 (biomass_positive)...")
+    # Classificador 1: biomass_positive 
+    print("A treinar Classificador 1 (biomass_positive)")
     clf1 = SVC(kernel="rbf", probability=True, random_state=RANDOM_STATE, class_weight="balanced")
     
     # Cross-validation para avaliar antes do treino final
@@ -208,7 +208,7 @@ def train_svm_classifiers(
     
     clf1.fit(X_flat_s, biomass_label_train)
 
-    # ── Classificador 2: product_positive ──
+    #  Classificador 2: product_positive 
     # Treinado apenas onde biomass > 0
     viable_mask = biomass_label_train == 1
     X_flat_s_viable     = X_flat_s[viable_mask]
@@ -229,7 +229,7 @@ def train_svm_classifiers(
     return clf1, clf2, clf_scaler, cv_scores_clf1, cv_scores_clf2
 
 
-# ── ANN Regressora ─────────────────────────────────────────────
+# ANN Regressora 
 def build_ann_model(output_dim: int, params: Dict) -> keras.Model:
     """
     Constrói a ANN regressora com embeddings para os genes.
@@ -408,7 +408,7 @@ def train_final_ann(X_num_train, X_genes_train, y_train,
     return model, x_scaler, y_scaler, report
 
 
-# ── Predição final com pipeline completo ──────────────────────
+# Predição final com pipeline completo 
 def predict_pipeline(
     X_num, X_genes,
     clf1, clf2, clf_scaler,
@@ -463,7 +463,7 @@ def predict_pipeline(
     return predictions, biomass_pos, product_pos
 
 
-# ── Guardar relatório ──────────────────────────────────────────
+# Guardar relatório 
 def save_report(
     best_params, trials, ann_report,
     clf1_cv, clf2_cv,
@@ -522,7 +522,7 @@ def save_report(
     print(f"Relatório guardado: {REPORT_XLSX}")
 
 
-# ── Main ───────────────────────────────────────────────────────
+# Main
 def main() -> None:
     # 1. Carregar dados
     print("A carregar dados")
@@ -586,7 +586,7 @@ def main() -> None:
     print(f"Amostras para regressão (teste):  {len(X_num_reg_test)}")
 
     # Hyperopt
-    print("\nA correr Hyperopt para a ANN regressora...")
+    print("\nA correr Hyperopt para a ANN regressora")
     space     = build_search_space(max_layers=5)
     trials    = Trials()
     objective = make_ann_objective(X_num_reg_train, X_genes_reg_train, y_reg_train, strata_reg_train)
