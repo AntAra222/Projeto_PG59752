@@ -11,7 +11,7 @@ The project evaluates multiple encoding strategies and hybrid machine learning a
 
 The project is organized into three main stages:
 
-- **Stage 1 — Dataset Generation** (`1_fase/`): generates metabolic engineering scenarios using the iML1515 genome-scale metabolic model. Random glucose uptake rates, oxygen uptake rates and gene knockouts are sampled, followed by Flux Balance Analysis (FBA) to obtain biomass growth and tryptophan production values.
+- **Stage 1 — Dataset Generation** (`Código/`,`1_fase/`): generates metabolic engineering scenarios using the iML1515 genome-scale metabolic model. Random glucose uptake rates, oxygen uptake rates and gene knockouts are sampled, followed by Flux Balance Analysis (FBA) to obtain biomass growth and tryptophan production values.
 
 - **Stage 2 — Data Preparation** (`Código/`): converts the original dataset into alternative machine learning representations:
   - Integer Encoding
