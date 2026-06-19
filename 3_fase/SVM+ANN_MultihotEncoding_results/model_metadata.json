@@ -1,0 +1,31 @@
+{
+  "pipeline": [
+    "clf1_biomass_svm_multihot",
+    "clf2_product_svm_multihot",
+    "ann_regressor_multihot"
+  ],
+  "encoding": "multi-hot em tudo",
+  "threshold": 0.5,
+  "n_gene_features": 1516,
+  "best_ann_params": {
+    "num_layers": 4,
+    "optimizer": "rmsprop",
+    "learning_rate": 0.0044750631997034366,
+    "epochs": 218,
+    "batch_size": 16,
+    "l2": 0.0001,
+    "batchnorm": 0,
+    "units_0": 499,
+    "dropout_0": 0.07396652798454029,
+    "activation_0": "relu",
+    "units_1": 124,
+    "dropout_1": 0.32437832511847087,
+    "activation_1": "selu",
+    "units_2": 382,
+    "dropout_2": 0.36512928142328427,
+    "activation_2": "softplus",
+    "units_3": 66,
+    "dropout_3": 0.14484642683296972,
+    "activation_3": "softplus"
+  }
+}
