@@ -1,0 +1,39 @@
+{
+  "pipeline": [
+    "clf1_biomass_svm",
+    "clf2_product_svm",
+    "ann_regressor_embeddings"
+  ],
+  "threshold": 0.5,
+  "decision_vars": [
+    "Glucose",
+    "O2",
+    "NK",
+    "g1",
+    "g2",
+    "g3",
+    "g4",
+    "g5",
+    "g6"
+  ],
+  "gene_encoding": "integer (embeddings)",
+  "best_ann_params": {
+    "num_layers": 3,
+    "optimizer": "adam",
+    "learning_rate": 0.00012442880129624748,
+    "epochs": 153,
+    "batch_size": 128,
+    "l2": 1e-06,
+    "batchnorm": 0,
+    "embedding_dim": 4,
+    "units_0": 493,
+    "dropout_0": 0.35752490825714384,
+    "activation_0": "relu",
+    "units_1": 17,
+    "dropout_1": 0.009023221853077487,
+    "activation_1": "softplus",
+    "units_2": 460,
+    "dropout_2": 3.0328996820455645e-05,
+    "activation_2": "relu"
+  }
+}
